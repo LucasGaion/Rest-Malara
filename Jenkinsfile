@@ -11,17 +11,27 @@ pipeline {
         
         stage('Build') {
             steps {
-                // Limpar o projeto
-                sh 'mvn clean'
-                // Compilar e instalar o projeto
-                sh 'mvn install'
+                // Executar as metas Maven com withMaven
+                withMaven(
+                    maven: 'maven3', 
+                    mavenSettingsConfig: 'my-maven-settings', 
+                    mavenLocalRepo: '.repository'
+                ) {
+                    sh 'mvn clean install'
+                }
             }
         }
         
         stage('Test') {
             steps {
-                // Executar os testes
-                sh 'mvn test'
+                // Executar os testes com withMaven
+                withMaven(
+                    maven: 'maven3', 
+                    mavenSettingsConfig: 'my-maven-settings', 
+                    mavenLocalRepo: '.repository'
+                ) {
+                    sh 'mvn test'
+                }
             }
         }
         
