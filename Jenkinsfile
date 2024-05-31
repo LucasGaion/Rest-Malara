@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        MAVEN_HOME = "/opt/homebrew/bin/mvn"
-    }
     stages {
         stage('Checkout') {
             steps {
@@ -11,16 +8,12 @@ pipeline {
         }
         stage('Build') {
             steps {
-                script {
-                    sh "${env.MAVEN_HOME} clean install"
-                }
+                sh './gradlew clean build'
             }
         }
         stage('Test') {
             steps {
-                script {
-                    sh "${env.MAVEN_HOME} test"
-                }
+                sh './gradlew test'
             }
         }
     }
