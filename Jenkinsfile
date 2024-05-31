@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        MAVEN_HOME = '/opt/homebrew/opt/maven/libexec'
+        PATH = "${MAVEN_HOME}/bin:${env.PATH}"
+    }
     stages {
         stage('Build') {
             steps {
